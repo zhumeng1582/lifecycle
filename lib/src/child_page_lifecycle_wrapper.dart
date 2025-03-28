@@ -56,6 +56,7 @@ class _ChildPageLifecycleWrapperState extends State<ChildPageLifecycleWrapper>
       updateKeepAlive();
     } else {
       SchedulerBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
         context.visitChildElements((element) {
           if (element is StatefulElement &&
               element.state is AutomaticKeepAliveClientMixin) {

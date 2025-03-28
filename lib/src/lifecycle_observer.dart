@@ -22,7 +22,6 @@ class LifecycleObserver extends NavigatorObserver with WidgetsBindingObserver {
   LifecycleObserver() {
     _cache.add(this);
     WidgetsBinding.instance.addObserver(this);
-    AppLifecycleListener();
   }
 
   /// Only for internal usage.

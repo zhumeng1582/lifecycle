@@ -16,7 +16,7 @@ class _MyPageViewState extends State<MyPageView> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    _pageController = PageController(initialPage: 1);
   }
 
   @override

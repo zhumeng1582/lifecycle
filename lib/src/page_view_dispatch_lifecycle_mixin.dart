@@ -17,7 +17,12 @@ mixin PageViewDispatchLifecycleMixin<T extends StatefulWidget>
   @override
   void initState() {
     super.initState();
-    // visitChildElements() can't called during build, so we schedule a frame callback.
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // visitChildElements() can not be called during build, so we schedule a frame callback.
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _updateController();
     });
@@ -29,7 +34,11 @@ mixin PageViewDispatchLifecycleMixin<T extends StatefulWidget>
     super.dispose();
   }
 
-  void subscribe(int index, LifecycleAware lifecycleAware) {
+  bool get _isBuilding =>
+      SchedulerBinding.instance.schedulerPhase ==
+      SchedulerPhase.persistentCallbacks;
+
+  void _doSubscribe(int index, LifecycleAware lifecycleAware) {
     if (_lifecycleSubscribers[index] != lifecycleAware) {
       _lifecycleSubscribers[index] = lifecycleAware;
       // Dispatch [LifecycleEvent.active] to initial page.
@@ -40,6 +49,27 @@ mixin PageViewDispatchLifecycleMixin<T extends StatefulWidget>
           dispatchEvents([LifecycleEvent.visible]);
         }
       }
+    }
+  }
+
+  void subscribe(int index, LifecycleAware lifecycleAware) {
+    if (_pageController == null) {
+      if (_isBuilding) {
+        // If the widget is building, we need to wait for the next frame to
+        // find controller and subscribe to the lifecycle event.
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          if (_pageController == null) {
+            _updateController();
+          }
+          _doSubscribe(index, lifecycleAware);
+        });
+      } else {
+        // Will never be reached?
+        _updateController();
+        _doSubscribe(index, lifecycleAware);
+      }
+    } else {
+      _doSubscribe(index, lifecycleAware);
     }
   }
 

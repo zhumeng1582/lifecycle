@@ -6,11 +6,12 @@ topics:
   - lifecycle
   - navigator-observer
   - app-lifecycle-state
-  - app-lifecycle-listener
-  - widgets-binding-observer
+  - lifecycle-listener
+  - widgets-lifecycle
 
 environment:
   flutter: ">=3.13.0"
+  sdk: ">=2.17.0"
 
 dependencies:
   flutter:

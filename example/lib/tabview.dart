@@ -22,7 +22,8 @@ class _MyTabViewState extends State<MyTabView>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: myTabs.length);
+    _tabController =
+        TabController(initialIndex: 0, vsync: this, length: myTabs.length);
   }
 
   @override
