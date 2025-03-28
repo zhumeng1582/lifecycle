@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.10.0] - 2025/03/28
+
+* Fix issue #27: Custom `initialPage` in `PageController`(also `initialIndex` in `TabController`)
+  will not trigger `visible` and `active`.
+* Migrate to new flutter's gradle plugins.
+
 ## [0.9.0] - 2024/09/04
 
 * Fix issue #26: both onVisible and onInvisible were not called on web platform.
