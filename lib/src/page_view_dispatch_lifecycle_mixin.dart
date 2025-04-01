@@ -1,3 +1,4 @@
+import 'package:extended_tabs/extended_tabs.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 
@@ -104,6 +105,12 @@ mixin PageViewDispatchLifecycleMixin<T extends StatefulWidget>
         pageController = pageView.controller;
         return;
       }
+      if (element.widget is ExtendedPageView) {
+        ExtendedPageView pageView = element.widget as ExtendedPageView;
+        pageController = pageView.controller;
+        return;
+      }
+
       element.visitChildren(findPageView);
     }
 

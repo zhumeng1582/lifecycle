@@ -16,6 +16,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # 联动tabs
+  extended_tabs: ^4.2.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
